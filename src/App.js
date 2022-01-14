@@ -8,7 +8,7 @@ const App = ()=>{
   const cartVisability = useSelector(state=>state.toggle.isToggled)
   return (
     <Layout>
-      {!cartVisability && <Cart />}
+      {cartVisability && <Cart />}
       <Products />
     </Layout>
   );
