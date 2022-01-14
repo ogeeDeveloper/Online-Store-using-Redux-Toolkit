@@ -21,7 +21,7 @@ const cartSlice =createSlice({
             if(!existingItem){
                 // Push item in the items array
                 state.items.push({
-                    itemId: newItem.id, 
+                    id: newItem.id, 
                     price: newItem.price, 
                     quantity: 1, 
                     totalPrice: newItem.price,
@@ -30,7 +30,7 @@ const cartSlice =createSlice({
             }else{
                 // Increase total Quantity b 1
                 state.totalQuantity--
-                
+
                 // If the Item already exists in the items array the update the Existing item
                 existingItem.quantity++
                 existingItem.totalPrice = existingItem.totalPrice + newItem.price
