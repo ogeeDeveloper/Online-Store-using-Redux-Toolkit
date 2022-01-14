@@ -1,6 +1,6 @@
 import { createSlice} from '@reduxjs/toolkit'
 
-createSlice({
+const cartSlice =createSlice({
     name:'cart',
     initialState: {
         items: [],
@@ -9,7 +9,7 @@ createSlice({
     reducers:{
         addItemsToCart(state, action){
             // Extract the item, and the action will be ay extra data that is extracted from payload
-            const newItem = action.payload
+            const newItem = action.payload // Paloads will be used to identify the item that will be added to cart
             // Check if the item already exist in cart, annd compare it against item already in cart
             const existingItem = state.items.find(item=>item.id===newItem.id)
             // If the item does ot exist the add it to the cart else increase the quantity of the existing item in cart
@@ -28,6 +28,23 @@ createSlice({
                 existingItem.totalPrice = existingItem.totalPrice + newItem.price
             }
         },
-        removeItemsToCart(state){},
+        removeItemsToCart(state, action){
+            const id = action.payload
+            const existingItem = state.items.find(item=>item.id===id)
+
+            // Checks if the quanity is 1, if its 1 then remove that item from cart
+            if(existingItem.quantity===1){
+                // Remove the item entirely
+                // Filter through the items and remove the item wich is ot equal to te rest of te items id
+                state.items= state.items.filter(item=>item.id !== id)
+            }else{
+                // Reduce the item quantity by 1
+                existingItem.quantity--
+                // Update the total price
+                existingItem.totalPrice = existingItem.totalPrice - existingItem.price
+            }
+        },
     },
 })
+
+export default cartSlice
