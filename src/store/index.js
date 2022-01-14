@@ -1,20 +1,6 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
+import toggleCartSlice from './UI_Layout-slice'
 
-const initialToggleCartState={isToggled:false}
-const toggleCartSlice = createSlice({
-    name: 'toggle_cart',
-    initialState: initialToggleCartState,
-    reducers:{
-        showCart(state){
-            state.isToggled=true
-        },
-        hideCart(state){
-            state.isToggled=false
-        },
-    }
-})
-
-export const toggleCartActions = toggleCartSlice.actions
 
 const store = configureStore({
     reducer:{
