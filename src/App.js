@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {sendCartData} from './store/cart-slice'
+import {sendCartData, fetchCartData} from './store/cart-action'
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
@@ -15,6 +15,11 @@ const App = ()=>{
   // Get state of overall cart
   const cart = useSelector(state=>state.cart)
   const notification = useSelector(state=>state.toggle.notification)
+
+  // useEffect to fetch data from the firestore database
+  useEffect(()=>{
+    dispatch(fetchCartData())
+  },[dispatch])
 
   // Use useEffect to watch for chages in our cart, the useEffect will re-execute when the cart changes
   useEffect(()=>{

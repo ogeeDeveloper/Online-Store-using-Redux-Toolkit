@@ -1,5 +1,4 @@
 import { createSlice} from '@reduxjs/toolkit'
-import {toggleCartActions} from './UI_Layout-slice'
 
 const cartSlice =createSlice({
     name:'cart',
@@ -8,6 +7,10 @@ const cartSlice =createSlice({
         totalQuantity: 0,
     },
     reducers:{
+        replaceCart(state, action){
+            state.totalQuantity = action.payload.totalQuantity
+            state.items = action.payload.items
+        },
         addItemsToCart(state, action){
             // Extract the item, and the action will be ay extra data that is extracted from payload
             const newItem = action.payload // Paloads will be used to identify the item that will be added to cart
@@ -55,45 +58,6 @@ const cartSlice =createSlice({
         },
     },
 })
-
-//Action Creator Thunk
-// Dispatching a fuction that takes in another fuction
-export const sendCartData=cart=>{
-    return async(dispatch) =>{
-        dispatch(toggleCartActions.showNotification({
-            status:"pending",
-            tittle:"Sending...",
-            message: "Sending cart data"
-          }))
-        
-        const sendResponse= async() => {
-            // Sends http request to firebase database
-            const response = await fetch('https://fir-react-tutorial-2b75e-default-rtdb.firebaseio.com/cart.json',{method: "PUT", body: JSON.stringify(cart)})
-
-            if(!response.ok){
-                throw new Error("Their was a error adding to cart")
-            }
-         }
-
-         try{
-             // Send Response
-            await sendResponse()
-
-            // Show a success notification
-            dispatch(toggleCartActions.showNotification({
-                status:"success",
-                tittle:"Success!",
-                message: "Send cart data succesfull"
-              }))
-         }catch(error){
-            dispatch(toggleCartActions.showNotification({
-                status:"error",
-                tittle:"Error!",
-                message: "Thier was an error adding item to cart"
-              }))
-         }
-    }
-}
 
 export const cartActions = cartSlice.actions
 
