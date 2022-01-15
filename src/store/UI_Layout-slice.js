@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialToggleCartState={isToggled:false}
+const initialToggleCartState={isToggled:false, notification: null}
 
 const toggleCartSlice = createSlice({
     name: 'toggle_cart',
@@ -9,6 +9,13 @@ const toggleCartSlice = createSlice({
         toggle(state){
             state.isToggled = !state.isToggled
         },
+        showNotification(state,action){
+            state.notification = {
+                status:  action.payload.status,
+                tittle: action.payload.tittle,
+                message: action.payload.message
+            } // Status could be pending or error
+        }
     }
 })
 
