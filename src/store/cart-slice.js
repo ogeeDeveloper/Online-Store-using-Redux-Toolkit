@@ -36,7 +36,7 @@ const cartSlice =createSlice({
                     name: newItem.title
                 })
             }else{
-                // Increase total Quantity b 1
+                // Increase total Quantity by 1
                 state.totalQuantity--
 
                 // If the Item already exists in the items array the update the Existing item
@@ -46,7 +46,7 @@ const cartSlice =createSlice({
         },
         removeItemsToCart(state, action){
             const id = action.payload
-            const existingItem = state.items.find(item=>item.id===id)
+            const existingItem = state.items.find(item=>item.id === id)
 
             state.isChange=true
 
