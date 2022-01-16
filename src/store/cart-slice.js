@@ -5,6 +5,7 @@ const cartSlice =createSlice({
     initialState: {
         items: [],
         totalQuantity: 0,
+        isChange: true,
     },
     reducers:{
         replaceCart(state, action){
@@ -20,6 +21,9 @@ const cartSlice =createSlice({
 
             // Increase total Quantity b 1
             state.totalQuantity++
+
+            // Set isChange to true
+            state.isChange=true
 
             // If the item does ot exist the add it to the cart else increase the quantity of the existing item in cart
             if(!existingItem){
@@ -43,6 +47,8 @@ const cartSlice =createSlice({
         removeItemsToCart(state, action){
             const id = action.payload
             const existingItem = state.items.find(item=>item.id===id)
+
+            state.isChange=true
 
             // Checks if the quanity is 1, if its 1 then remove that item from cart
             if(existingItem.quantity===1){

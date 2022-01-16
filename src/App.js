@@ -27,8 +27,13 @@ const App = ()=>{
       isInitial=false
       return
     }
-    // Dispatching the sendToCart action to accept the cart as an argument
-    dispatch(sendCartData(cart))
+
+    // Only if isChage is true ad change locally we will send the cart data
+    if(cart.isChange){
+      // Dispatching the sendToCart action to accept the cart as an argument
+      dispatch(sendCartData(cart))
+    }
+    
   },[cart,dispatch])
   return (
     <>

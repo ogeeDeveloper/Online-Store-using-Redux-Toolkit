@@ -8,7 +8,7 @@ export const fetchCartData=()=>{
             const response = await fetch('https://fir-react-tutorial-2b75e-default-rtdb.firebaseio.com/cart.json')
 
             if(!response.ok){
-                return new Error("Teir was an error fetching data")
+                return new Error("Their was an error fetching data")
             }
 
             const data = response.json()
@@ -19,7 +19,11 @@ export const fetchCartData=()=>{
             // Asign the fetch data to the cartData variable
             const cartData = await fetchData()
             // dispatch the action to replace items inn cart and display them when even the page refreshes
-            dispatch(cartActions.replaceCart(cartData))
+            dispatch(cartActions.replaceCart({
+                //When fetching data from database we sould see if the database is empty else we'll get undefined
+                items:cartData.items || [],
+                totalQuantity: cartData.totalQuantity,
+            }))
         }catch(error){
             dispatch(toggleCartActions.showNotification({
                 status:"error",
@@ -42,7 +46,10 @@ export const sendCartData=cart=>{
         
         const sendResponse= async() => {
             // Sends http request to firebase database
-            const response = await fetch('https://fir-react-tutorial-2b75e-default-rtdb.firebaseio.com/cart.json',{method: "PUT", body: JSON.stringify(cart)})
+            const response = await fetch('https://fir-react-tutorial-2b75e-default-rtdb.firebaseio.com/cart.json',{method: "PUT", body: JSON.stringify({
+                items: cart.items,
+                totalQuantity: cart.totalQuantity,
+            })})
 
             if(!response.ok){
                 throw new Error("Their was a error adding to cart")
